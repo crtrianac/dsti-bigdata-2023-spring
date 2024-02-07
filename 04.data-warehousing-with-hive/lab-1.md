@@ -104,5 +104,22 @@ Now we want to populate our ORC table from our CSV table. Using the [Hive Data M
    - Split `name` into `first_name` and `last_name`
    - Transform `certified` from `STRING` to `BOOLEAN`
    - Rename `location` to `address`
+  
+     INSERT INTO TABLE dsti_spoc.c_triana_dsti_nyc_drivers
+SELECT
+  driver_id,
+  split(name, ' ')[0] AS first_name,
+  split(name, ' ')[1] AS last_name,
+  location AS address,
+  (certified = 'yes') AS certified,
+  wage_plan
+FROM
+  dsti_spoc.c_triana_dsti_nyc_drivers_ext;
+
 2. Execute your query
-3. Check what the data looks like in the managed table using the HDFS CLI at `/warehouse/tablespace/managed/hive/dsti_2023_fallbda_1.db/${username}_nyc_drivers`
+3. Check what the data looks like in the managed table using the HDFS CLI at
+   SELECT * FROM dsti_spoc.c_triana_dsti_nyc_drivers LIMIT 10;
+
+
+you cant really do that 
+`/warehouse/tablespace/managed/hive/dsti_2023_fallbda_1.db/${username}_nyc_drivers`
