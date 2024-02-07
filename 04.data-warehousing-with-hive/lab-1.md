@@ -43,7 +43,27 @@ Using the official [Hive Data Definition Langage](https://cwiki.apache.org/confl
    TBLPROPERTIES ('skip.header.line.count'='1');
    ```
 
+   SET hivevar:clusterUsername=c.triana_dsti;
+SET hivevar:hiveUsername=c_triana_dsti;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS dsti_spoc.c_triana_dsti_nyc_drivers_ext (
+  driver_id INT,
+  name STRING,
+  ssn STRING,
+  location STRING,
+  certified STRING,
+  wage_plan STRING
+)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+STORED AS TEXTFILE
+LOCATION '/education/dsti_spoc/c.triana-dsti/lab4/nyc_drivers'
+TBLPROPERTIES ('skip.header.line.count'='1');
+
+
 5. Check that the table is correctly created by selecting all the data in it. **If you see only `NULL` values, your schema is not correct.**
+
+   SELECT * FROM dsti_spoc.c_triana_dsti_nyc_drivers_ext LIMIT 10;
+
 
 ### Create a managed ORC table
 
@@ -59,7 +79,22 @@ STORED AS ORC;
    2. The column `name` divided into `first_name` and `last_name`
    3. The column `location` renamed as `address` (because `LOCATION` is a Hive keyword)
    4. The column `certified` as a `BOOLEAN`
+
+  CREATE TABLE dsti_spoc.c_triana_dsti_nyc_drivers (
+  driver_id INT,
+  first_name STRING,
+  last_name STRING,
+  address STRING,
+  certified BOOLEAN,
+  wage_plan STRING
+)
+STORED AS ORC;
+
+      
 2. Check that your table was created using the HDFS CLI at `/warehouse/tablespace/managed/hive/dsti_2023_fallbda_1.db/${USER}_nyc_drivers` (should be empty)
+
+   hdfs dfs -ls /warehouse/tablespace/managed/hive/dsti_spoc.db/c_triana_dsti_nyc_drivers
+The path exist so it has being creted, now we need to upload hte data. 
 
 ### Load data from the CSV table to the ORC table
 
