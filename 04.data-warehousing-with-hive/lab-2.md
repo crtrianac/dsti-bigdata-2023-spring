@@ -12,7 +12,9 @@
 In this lab we will the 4 IMDb datasets that are located in your group database:
 
 - `imdb_name_basics`
+- wget https://datasets.imdbws.com/name.basics.tsv.gz
 - `imdb_title_basics`
+- 
 - `imdb_title_crew`
 - `imdb_title_ratings`
 
