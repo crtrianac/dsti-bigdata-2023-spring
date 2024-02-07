@@ -65,12 +65,10 @@ FIELDS TERMINATED BY '\t'
 STORED AS TEXTFILE
 LOCATION '/education/dsti_spoc/resources/lab4/IMDb_datasets/';
 
-
-
 SELECT COUNT(*) AS Titles_Over_2_Hours
 FROM dsti_spoc.c_triana_dsti_imdb_title_basics
 WHERE CAST(runtimeMinutes AS INT) > 120;
-
+"
 
 
 3. Average duration of titles containing the word "world" (but not words like "Underworld"). Hint: use `RLIKE` (see [RegExr](https://regexr.com/))
@@ -81,11 +79,37 @@ WHERE primaryTitle RLIKE '\\bworld\\b'
 AND runtimeMinutes RLIKE '^[0-9]+$';
 
 5. Average rating of titles having the genre "Comedy"
-SELECT AVG(r.averageRating) AS Average_Comedy_Rating
-FROM imdb_title_basics b
-JOIN imdb_title_ratings r ON b.tconst = r.tconst
-WHERE genres RLIKE 'Comedy'
+
+It does not work :
+_______
+SET hivevar:group=dsti_spoc;
+
+SELECT AVG(ratings.averagerating) AS avg_rating
+FROM (
+  SELECT tconst
+  FROM dsti_spoc.imdb_title_basics
+  WHERE genres RLIKE 'Comedy'
+) titles
+JOIN dsti_spoc.imdb_title_ratings ratings
+ON titles.tconst = ratings.tconst;
+
+______
+It does work 
+
+SELECT AVG(r.averagerating) AS avg_comedy_rating
+FROM dsti_spoc.imdb_title_basics b
+JOIN dsti_spoc.imdb_title_ratings r ON b.tconst = r.tconst
+WHERE array_contains(b.genres, 'Comedy');
    
 7. Top 5 movies directed by Tarantino
+
+SELECT nconst FROM dsti_spoc.imdb_name_basics WHERE primaryName='Quentin Tarantino';
+SELECT t.primaryTitle, r.averageRating
+FROM dsti_spoc.imdb_title_basics t
+JOIN dsti_spoc.imdb_title_crew c ON t.tconst = c.tconst
+JOIN dsti_spoc.imdb_title_ratings r ON t.tconst = r.tconst
+WHERE array_contains(c.director, 'nm0000233')
+ORDER BY r.averageRating DESC
+LIMIT 5;
 
 For 5., you can first try to do it in 2 seperate queries. Then try to use a single query (tip: `explode` or `array_contains`)
