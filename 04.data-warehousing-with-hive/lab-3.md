@@ -76,6 +76,8 @@ DESCRIBE FORMATTED dsti_spoc.c_triana_dsti_science_federal_giving;
 0       0       hdfs://au/user/c.triana-dsti/.staging
 2.6 M   5.3 M   hdfs://au/user/c.triana-dsti/science_federal_giving_samp.csv
 
+the ORC table should be  optimized for size and performances. We can see a redution on size of 4 times. 
+
 hdfs dfs -ls /user/c.triana-dsti/
 hdfs dfs -du -h /path/to/csv/table
 
