@@ -97,4 +97,9 @@ The WordCount example is also located in the MapReduce example JAR. It takes sev
     wordcount /education/dsti_2023_fallbda_1/resources/lab2 \
     /education/dsti_2023_fallbda_1/$USER/lab2/output-moby-dick
    ```
-3. Check out the output directory
+
+   hdfs dfs -ls /education/dsti_spoc/c.triana-dsti
+/education/dsti_spoc/c.triana-dsti/lab2/output-moby-dick
+
+
+4. Check out the output directory
