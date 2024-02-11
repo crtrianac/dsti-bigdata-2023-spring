@@ -19,15 +19,17 @@ Connect to the Adaltas cloud cluster using OpenVPN.
 1. Navigate to http://zep-1.au.adaltas.cloud:9995 with your browser
 2. Login using your Adaltas cloud credentials
    ![Zeppelin login](images/zeppelin-login.png)
-3. In the folder `ece-2022-spring/spark/ref`:
+3. In the folder `ece-2022-spring/spark/ref`: 
    1. Navigate to the `lab1` notebook
-   2. Create a copy of the notebook (by using the **Clone this note** button) and name it like follow: `ece-2022-spring/spark/cluster-username/lab1` (e.g. `ece-2022-spring/spark/gauthier/lab1`). This should create your folder in `ece-2022-spring/spark`.
+   2. Create a copy of the notebook (by using the **Clone this note** button) and name it like follow: `ece-2022-spring/spark/cluster-username/lab1` (e.g. `ece-2022-spring/spark/gauthier/lab1`). This should create your folder in `ece-2022-spring/spark`. 
    3. In your notebook `lab1` → **🔒 Note permissions**: add the user `gauthier` to the “Runners” (and any other user you want)
    4. Initialize your interpreter by running the first cell
 
 ### During the session
 
 Go through the notebook and fill the blanks. By the end of the session we should have:
+
+ hdfs dfs -ls /education/dsti_spoc/resources/lab2/moby-dick.txt
 
 - The number of words by chapter
 - The number of occurrence of each word in each chapter
